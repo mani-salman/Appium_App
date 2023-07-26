@@ -5,8 +5,8 @@ from selenium.webdriver.common.by import By
 from appium.webdriver.common.touch_action import TouchAction
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from Arriva_POM_Project.login_page import LoginPage
-from Arriva_POM_Project.signup_page import SignupPage
+from login_page import LoginPage
+from signup_page import SignupPage
 
 # Desired capabilities for the Appium driver
 desired_cap = {
