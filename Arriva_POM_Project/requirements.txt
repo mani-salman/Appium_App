@@ -1,5 +1,5 @@
 Appium-Python-Client==2.11.1
-Python==3.11.4
+Python==3.9.13
 PySocks==1.7.1
 allure-pytest==2.9.45
 allure-python-commons==2.9.45
