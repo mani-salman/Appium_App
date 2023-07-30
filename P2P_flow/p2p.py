@@ -1,5 +1,5 @@
-import time
 import pytest
+import time
 from appium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -10,8 +10,6 @@ desired_cap = {
     "platformName": "Android",
     "platformVersion": "11",
     "app": "C:\\Users\\HP\\Desktop\\AppiumApps\\com.arriva.bus_2023-06-05.apk",
-    "appPackage": "com.arriva.bus",
-    "appActivity": "your_app_activity" # Replace with your app's activity name
 }
 
 # Appium server URL
@@ -55,25 +53,38 @@ def test_grant_permission():
     permission_button = wait.until(EC.element_to_be_clickable(permission_button_locator))
     permission_button.click()
 
-def test_pin_location_on_map():
-    # Wait for the map to load
-    map_locator = (By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.LinearLayout/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.RelativeLayout[2]')
-    map_element = wait.until(EC.visibility_of_element_located(map_locator))
+def test_search_and_select_destination():
+    # Tap on the "Where do you want to go?" field and search for "London Road Armoury Gardens"
+    destination_field_locator = (By.ID, 'com.arriva.bus:id/search')
+    destination_field = wait.until(EC.visibility_of_element_located(destination_field_locator))
+    destination_field.click()
 
-    # Define the coordinates of the main city (e.g., London)
-    city_latitude = 51.5074
-    city_longitude = -0.1278
+    time.sleep(2)
 
-    # Set the map's center to the desired coordinates
-    script = f"map.setCenter({city_latitude}, {city_longitude});"
-    driver.execute_script(script)
+    # Check if the destination search field is clickable
+    destination_search_locator = (By.ID, 'com.arriva.bus:id/locationName')
+    destination_search = wait.until(EC.element_to_be_clickable(destination_search_locator))
+    destination_search.click()
 
-    # Wait for a few seconds to allow the map to load the new location
-    time.sleep(5)
+    # Wait briefly before forcefully setting the value in the field
+    time.sleep(1)
 
-def test_quit_driver():
-    driver.quit()
+    search_query = "London Road Armoury Gardens"
+    driver.set_value(destination_search, search_query)
 
+    # Wait for the search results to appear and select "London Road Armoury Gardens" from the drop-down
+    search_result_locator = (By.XPATH, '//android.view.ViewGroup[@content-desc="item_0"]/android.widget.TextView')
+    london_road_armoury_gardens_option = wait.until(EC.visibility_of_element_located(search_result_locator))
+    london_road_armoury_gardens_option.click()
+
+
+def test_select_date_from_calendar():
+    # Tap on the calendar to select the date
+    calendar_locator = (By.ID, 'com.arriva.bus:id/departureTimeLabel')
+    calendar_button = wait.until(EC.visibility_of_element_located(calendar_locator))
+    calendar_button.click()
+
+
+# The test functions will be executed as part of the test suite
 if __name__ == "__main__":
-    # Run the test functions using pytest
     pytest.main(["-v"])
