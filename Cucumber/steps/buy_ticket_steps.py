@@ -1,7 +1,7 @@
 from behave import given, when, then
 from appium import webdriver
-from Arriva_POM_Project.login_page import LoginPage
-from Arriva_POM_Project.buy_ticket_page import BuyTicketPage
+from login_page import LoginPage
+from buy_ticket_page import BuyTicketPage
 
 # Desired capabilities for the Appium driver
 desired_cap = {
