@@ -71,7 +71,9 @@ def test_scroll_down():
 
     assert True, "Scrolling down performed successfully"
 
-
+@allure.title("Test Case: Quit the driver")
+def test_quit_driver():
+    driver.quit()
 
 
 if __name__ == "__main__":
